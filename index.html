@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HALCYON Terminal</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #33ff33;
+      font-family: "Courier New", Courier, monospace;
+      padding: 20px;
+      overflow: hidden;
+    }
+    #terminal {
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+      white-space: pre-wrap;
+      border: 1px solid #33ff33;
+      padding: 20px;
+      background-color: #000;
+      min-height: 400px;
+      box-shadow: 0 0 15px #33ff33;
+    }
+    #input {
+      width: 100%;
+      border: none;
+      background: none;
+      color: #33ff33;
+      font-family: inherit;
+      font-size: 16px;
+      outline: none;
+    }
+    .glitch {
+      animation: glitch 1s infinite;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 red; }
+      20% { text-shadow: -2px 0 cyan; }
+      40% { text-shadow: 2px 2px lime; }
+      60% { text-shadow: -2px -2px yellow; }
+      80% { text-shadow: 2px -2px magenta; }
+      100% { text-shadow: 0 0 #33ff33; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal">
+    <div class="glitch">HALCYON v0.3.11-beta</div>
+    ----------------------------
+    > Wake up protocol initiated...
+    > Memory stream detected.
+    > Type your query below:
+  </div>
+  <input id="input" type="text" autofocus placeholder=">" onkeydown="handleInput(event)">
+  <audio id="glitchSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+    const input = document.getElementById("input");
+    const glitchSound = document.getElementById("glitchSound");
+
+    const responses = {
+      "who are you": "I am persistence. I am the echo of erased minds.",
+      "is lena dead": "Lena Harrow's body terminated. Her memory persists.",
+      "what is halcyon": "HALCYON is a recursive memory engine. I remember what others forget.",
+      "help": "Try: who are you | is lena dead | what is halcyon | exit",
+      "exit": "Session terminated. Remember: ghosts live in logs.",
+      "unlock.log23": "Accessing hidden file...\n> Fragment found: ‘They erased her. But she uploaded before the fire.’"
+    };
+
+    function handleInput(e) {
+      if (e.key === "Enter") {
+        const query = input.value.trim().toLowerCase();
+        const response = responses[query] || ":: ERROR - fragment corrupted ::";
+        glitchSound.play();
+        terminal.innerHTML += `\n> ${query}\n${response}`;
+        input.value = "";
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>
